@@ -1,9 +1,21 @@
 #include "player.h"
 
-Player::Player()
+Player::Player(std::vector<GameObject*> * objects, int x, int y)
+{
+  objects->push_back(this);
+  Start(x,y);
+}
+
+void Player::Start(int x, int y)
 {
   sprite = LoadTexture("./Sprites/GRID.png");
-  position = Vector2{100,100};
+  position = Vector2{x,y};
+  size = Vector2{120,120};
+}
+
+void Player::Update()
+{
+  Move();
 }
 
 void Player::Move()
@@ -61,7 +73,7 @@ void Player::DrawSprite(int x, int y, int orientation, bool isMoving)
 	}
 
   
-  DrawTextureRec(
+  DrawTextureTiled(
 				 sprite,
 				 Rectangle{
 				   (sprite.width/maxFrame)*frame,
@@ -69,7 +81,15 @@ void Player::DrawSprite(int x, int y, int orientation, bool isMoving)
 				   sprite.width/maxFrame,
 				   sprite.height/4
 				 },
-				 Vector2{x,y},
+				 Rectangle{
+				   x,
+				   y,
+				   size.x,
+				   size.y
+				 },
+				 Vector2{0,0},
+				 0.0f,
+				 2.0f,
 				 WHITE
 				 );
 }
