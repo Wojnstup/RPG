@@ -1,6 +1,10 @@
 #include "raylib.h"
 #include "gameObject.h"
 
+
+//#ifndef _COLLISIONS_H
+//#endif
+
 enum Orientation {
   FRONT,
   BACK,

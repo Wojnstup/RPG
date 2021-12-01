@@ -1,9 +1,9 @@
 #include "player.h"
-
+#include <iostream>
 
 int main()
 {
-  /*Window init should be first!*/
+  /*Window init should be first! */
 	const int screenWidth=1080;
 	const int screenHeight=720;
 	InitWindow(screenWidth,screenHeight, "Animations and textures");
@@ -11,7 +11,7 @@ int main()
 
 	std::vector<GameObject*> objects;
 	Player player(&objects, 10, 500);
-	Player player2(&objects, 100, 100);
+	//Player player2(&objects, 100, 100);
 
 	Texture2D background = LoadTexture("./Sprites/background.png");
 	

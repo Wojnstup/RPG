@@ -12,9 +12,6 @@ public:
   virtual void Start(){};
   virtual void Update(){};
 
-  
-  //static std::vector<GameObject*> objects;
-  
 };
 
 

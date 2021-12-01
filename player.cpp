@@ -1,4 +1,5 @@
 #include "player.h"
+#include "collisions.h"
 
 Player::Player(std::vector<GameObject*> * objects, int x, int y)
 {
@@ -27,14 +28,12 @@ void Player::Move()
   if (IsKeyDown(KEY_A))
   {
 	newX -= speed;
-	position.x -= speed;
 
 	prevOrient = LEFT;
 	isMoving = true;
   }else if (IsKeyDown(KEY_D))
   {
 	newX += speed;
-	position.x += speed;
 	
 	prevOrient = RIGHT;
 	isMoving = true;
@@ -43,20 +42,27 @@ void Player::Move()
   if (IsKeyDown(KEY_W))
   {
 	newY -= speed;
-	position.y -= speed;
 	
 	prevOrient = BACK;
 	isMoving = true;
   }else  if (IsKeyDown(KEY_S))
   {
 	newY += speed;
-	position.y += speed;
 	
 	prevOrient = FRONT;
 	isMoving = true;
   }
   
-  DrawSprite(newX, newY, prevOrient, isMoving);
+  if(!CheckCollisionRecLine(Rectangle{newX, newY, size.x,size.y},Vector2{0,180}, Vector2{1080,180} ))
+	{
+	  position = Vector2{newX, newY};
+
+	}
+  else if(!CheckCollisionRecLine(Rectangle{newX, position.y, size.x,size.y},Vector2{0,180}, Vector2{1080,180} ))
+	{
+	  position.x = newX;
+	}
+	  DrawSprite(newX, newY, prevOrient, isMoving);
 }
 
 void Player::DrawSprite(int x, int y, int orientation, bool isMoving)
