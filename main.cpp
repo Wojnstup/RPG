@@ -1,5 +1,7 @@
-#include "player.h"
-#include <iostream>
+//#include "player.h"
+//#include <iostream>
+#include "level.h"
+
 
 int main()
 {
@@ -9,17 +11,22 @@ int main()
 	InitWindow(screenWidth,screenHeight, "Animations and textures");
 	SetTargetFPS(60);
 
-	std::vector<GameObject*> objects;
-	Player player(&objects, 10, 500);
-	//Player player2(&objects, 100, 100);
+	/* Objects */
+	std::vector<GameObject*> objects1;
+	Player player(&objects1, 10, 500);
 
-	Texture2D background = LoadTexture("./Sprites/background.png");
+	//Texture2D background = LoadTexture("./Sprites/background.png");
 	
-	while(!WindowShouldClose())
-	{
-	  BeginDrawing();
-	     ClearBackground(Color{41,135,1});
+	/* Level Init*/
 
+	Level level1(&objects1, "./Sprites/background.png");
+	level1.Init();
+	
+	//while(!WindowShouldClose())
+	//{
+	//ClearBackground(Color{41,135,1});
+	level1.Loop();
+	  /*
 		 DrawTextureTiled(
 						  background,
 						  Rectangle{
@@ -38,9 +45,8 @@ int main()
 		 {
 			 object->Update();
 		 }
-
-	  EndDrawing();
-	}
+	  */
+	  //}
 
 	CloseWindow();
 }

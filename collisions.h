@@ -32,3 +32,45 @@ bool CheckCollisionRecLine(struct Rectangle rec, struct Vector2 lineStart, struc
 	return false;
 }
 
+bool CheckCollisionRecPoly(struct Rectangle rec, std::vector<Vector2> pol, int &lineIndex)
+{
+  for(int i=0; i < pol.size() - 1; i++)
+	{
+	  if(CheckCollisionRecLine(rec,pol[i],pol[i+1]))
+		{
+		  lineIndex=1;
+		  return true;
+		}
+	}
+  
+  if(CheckCollisionRecLine(rec,pol[pol.size()-1],pol[0]))
+	{
+	  lineIndex = pol.size();
+	  return true;
+	}
+
+  return false;
+}
+
+
+void CheckCollisionRecColliders(struct Rectangle &rec, struct Vector2 speed, std::vector<std::vector<Vector2>> colliders)
+{
+  int lineIndex;
+  for(std::vector<Vector2> collider : colliders)
+	{
+	  if( CheckCollisionRecPoly(rec, collider, lineIndex ))
+		rec.x = rec.x - speed.x;
+	  
+	  if( CheckCollisionRecPoly(rec, collider, lineIndex ))
+		{
+		  rec.x = rec.x + speed.x;
+		  rec.y = rec.y - speed.y;
+		}
+	  
+	  if( CheckCollisionRecPoly(rec, collider, lineIndex ))
+		rec.x = rec.x - speed.x;
+
+	  
+	}
+
+}
