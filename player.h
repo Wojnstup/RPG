@@ -1,6 +1,5 @@
 #include "raylib.h"
 #include "gameObject.h"
-#include <iostream>
 
 
 //#ifndef _COLLISIONS_H
@@ -24,11 +23,15 @@ class Player : public GameObject{
   /*Functions*/
   void DrawSprite(int x, int y, int orientation, bool isMoving);
   void Move(); 
-  void CollisionCheck(int newX, int newY, bool isMoving);
+  void CollisionCheck();
+  void SetInterPoint();
  
   struct Vector2 size;
   struct Vector2 position;
   struct Rectangle collider;
+
+  // struct Vector2 centerPoint;
+  struct Vector2 interPoint;
 
 private:
   Texture2D sprite; 

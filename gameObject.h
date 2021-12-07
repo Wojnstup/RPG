@@ -12,6 +12,8 @@ public:
   virtual void Start(){};
   virtual void Update(){};
 
+  struct Vector2 centerPoint;
+
 };
 
 

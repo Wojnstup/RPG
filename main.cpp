@@ -1,5 +1,3 @@
-//#include "player.h"
-//#include <iostream>
 #include "level.h"
 
 
@@ -14,39 +12,20 @@ int main()
 	/* Objects */
 	std::vector<GameObject*> objects1;
 	Player player(&objects1, 10, 500);
+	Camera2D camera = {0};
+	camera.target = player.position;
+	camera.offset = Vector2{screenWidth/2,screenHeight/2};
+	camera.rotation = 0.0f;
+	camera.zoom=1.0f;
+	
 
-	//Texture2D background = LoadTexture("./Sprites/background.png");
 	
 	/* Level Init*/
 
-	Level level1(&objects1, "./Sprites/background.png");
+	Level level1(&objects1, "./Sprites/background.png", &camera);
 	level1.Init();
 	
-	//while(!WindowShouldClose())
-	//{
-	//ClearBackground(Color{41,135,1});
 	level1.Loop();
-	  /*
-		 DrawTextureTiled(
-						  background,
-						  Rectangle{
-							0,0,540,360
-						  },
-						  Rectangle{
-							0,0,1080,720
-						  },
-						  Vector2{0,0},
-						  0.0f,
-						  2.0f,
-						  WHITE
-						  );
-		 
-		 for( GameObject * object : objects )
-		 {
-			 object->Update();
-		 }
-	  */
-	  //}
 
 	CloseWindow();
 }
