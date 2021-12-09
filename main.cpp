@@ -1,5 +1,5 @@
-#include "level.h"
-
+#include "Engine/level.h"
+#include "player.h"
 
 int main()
 {
@@ -11,7 +11,26 @@ int main()
 
 	/* Objects */
 	std::vector<GameObject*> objects1;
-	Player player(&objects1, 10, 500);
+
+	std::vector<std::vector<Vector2>> colliders;
+  
+	std::vector<Vector2> polygon= {
+	  Vector2{200,200},
+	  Vector2{200,300},
+	  Vector2{300,300},
+	  Vector2{300,200}
+	};
+	
+	std::vector<Vector2> treeLine = {
+	  Vector2{0,240},
+	  Vector2{1080,240}
+	};
+	
+  
+	colliders.push_back(treeLine);
+	colliders.push_back(polygon);
+	
+	Player player(&objects1, &colliders, 10, 500);
 	Camera2D camera = {0};
 	camera.target = player.position;
 	camera.offset = Vector2{screenWidth/2,screenHeight/2};

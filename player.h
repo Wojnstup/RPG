@@ -1,9 +1,8 @@
 #include "raylib.h"
-#include "gameObject.h"
 
-
-//#ifndef _COLLISIONS_H
-//#endif
+#ifndef _GAMEOBJECT_H
+#include "Engine/gameObject.h"
+#endif
 
 enum Orientation {
   FRONT,
@@ -16,8 +15,12 @@ enum Orientation {
 class Player : public GameObject{
  public:
   
-  Player(std::vector<GameObject*> * objects, int x, int y);
-  //void Start(/*int x, int y*/);
+  Player(
+		 std::vector<GameObject*> * objects,
+		 std::vector<std::vector<Vector2>> * _colliders,
+		 int x,
+		 int y
+		 );
   void Update();
 
   /*Functions*/
@@ -25,6 +28,7 @@ class Player : public GameObject{
   void Move(); 
   void CollisionCheck();
   void SetInterPoint();
+  void Interact();
  
   struct Vector2 size;
   struct Vector2 position;
@@ -36,12 +40,15 @@ class Player : public GameObject{
 private:
   Texture2D sprite; 
   int speed=5;
-  struct Vector2 speedV; // = 5;
+  struct Vector2 speedV; 
   
   /* Animation variables */
   int prevOrient=FRONT;
   int frame=0;
   float timer=0;
   const int maxFrame=4;
+  
+  //Collider stuff
+  std::vector<std::vector<Vector2>> * colliders;
   
 };

@@ -1,9 +1,15 @@
 #include "player.h"
-#include "collisions.h"
+#include "Engine/collisions.h"
 
-Player::Player(std::vector<GameObject*> * objects, int x, int y)
+Player::Player(
+			   std::vector<GameObject*> * objects,
+			   std::vector<std::vector<Vector2>> * _colliders,
+			   int x,
+			   int y
+			   )
 {
   objects->push_back(this);
+  colliders = _colliders;
   sprite = LoadTexture("./Sprites/GRID.png");
   position = Vector2{x,y};
   size = Vector2{120,120};
@@ -16,6 +22,10 @@ Player::Player(std::vector<GameObject*> * objects, int x, int y)
 void Player::Update()
 {
   Move();
+  if (IsKeyPressed(KEY_SPACE))
+	{
+	  Interact();
+	}
 }
 
 void Player::Move()
@@ -80,30 +90,13 @@ void Player::CollisionCheck()
 {
   collider.x += speedV.x;
   collider.y += speedV.y;
-  std::vector<std::vector<Vector2>> colliders;
-  
-  std::vector<Vector2> polygon= {
-	Vector2{200,200},
-	Vector2{200,300},
-	Vector2{300,300},
-	Vector2{300,200}
-  };
-
-  std::vector<Vector2> treeLine = {
-	Vector2{0,240},
-	Vector2{1080,240}
-  };
-
-  
-  colliders.push_back(treeLine);
-  colliders.push_back(polygon);
   int edge;
 
-  for ( struct Vector2 point : polygon)
+  for ( struct Vector2 point : (*colliders)[1])
 	{
 	  DrawCircle(point.x,point.y,10.0f,WHITE);
 	}
-  CheckCollisionRecColliders(collider, speedV, colliders);
+  CheckCollisionRecColliders(collider, speedV, *colliders);
 
 }
 
@@ -160,5 +153,11 @@ void Player::SetInterPoint()
 	break;
 
   }
-  DrawCircle(interPoint.x,interPoint.y,10.0f,RED);
+  DrawCircle(interPoint.x,interPoint.y,10.0f, BLUE);
+}
+
+
+void Player::Interact()
+{
+  DrawCircle(interPoint.x,interPoint.y,10.0f, RED);
 }
