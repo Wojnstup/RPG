@@ -1,14 +1,21 @@
 #include "player.h"
+//#include "Engine/interactable.h"
+#include "chest.h"
+#include <iostream>
+
+#ifndef _COLLISIONS_H
 #include "Engine/collisions.h"
+#endif
 
 Player::Player(
-			   std::vector<GameObject*> * objects,
+			   std::vector<GameObject*> * _objects,
 			   std::vector<std::vector<Vector2>> * _colliders,
 			   int x,
 			   int y
 			   )
 {
-  objects->push_back(this);
+  _objects->push_back(this);
+  objects = _objects;
   colliders = _colliders;
   sprite = LoadTexture("./Sprites/GRID.png");
   position = Vector2{x,y};
@@ -159,5 +166,20 @@ void Player::SetInterPoint()
 
 void Player::Interact()
 {
+  for (GameObject * object : (*objects))
+	{
+	  if(object->hasColliderPoints)
+		{
+		  std::cout << "HAS COLLIDER POINTS!!!"; 
+		  if(CheckCollisionPolyLine(
+									centerPoint,
+									interPoint,
+									dynamic_cast<Interactable*>(object)->points
+
+									))
+		  dynamic_cast<Interactable*>(object)->OnInteract();
+		}
+	}
+  
   DrawCircle(interPoint.x,interPoint.y,10.0f, RED);
 }

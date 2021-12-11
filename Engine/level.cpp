@@ -22,7 +22,7 @@ void Level::Loop()
 {
   while(isActive && !WindowShouldClose())
 	{
-	  camera->target =  (*objects)[0]->centerPoint;
+	  camera->target =  (*objects)[(*objects).size()-1]->centerPoint;
 	  BeginDrawing();
 	  BeginMode2D(*camera);
 
@@ -41,7 +41,7 @@ void Level::Loop()
 						  WHITE
 						  );
 	  
-	  for(int i=0; i<objects->size(); i++)
+		 for(int i=0; i<objects->size(); i++)
 		(*objects)[i]->Update();	  
 
 

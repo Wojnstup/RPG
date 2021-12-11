@@ -16,7 +16,7 @@ class Player : public GameObject{
  public:
   
   Player(
-		 std::vector<GameObject*> * objects,
+		 std::vector<GameObject*> * _objects,
 		 std::vector<std::vector<Vector2>> * _colliders,
 		 int x,
 		 int y
@@ -38,6 +38,7 @@ class Player : public GameObject{
   struct Vector2 interPoint;
 
 private:
+  std::vector<GameObject*> * objects;
   Texture2D sprite; 
   int speed=5;
   struct Vector2 speedV; 

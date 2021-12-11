@@ -1,5 +1,6 @@
 #include "Engine/level.h"
 #include "player.h"
+#include "chest.h"
 
 int main()
 {
@@ -25,11 +26,14 @@ int main()
 	  Vector2{0,240},
 	  Vector2{1080,240}
 	};
-	
+
   
 	colliders.push_back(treeLine);
 	colliders.push_back(polygon);
 	
+	Chest chest1(&objects1,300,300);
+	colliders.push_back(chest1.points);
+
 	Player player(&objects1, &colliders, 10, 500);
 	Camera2D camera = {0};
 	camera.target = player.position;

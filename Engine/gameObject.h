@@ -17,6 +17,8 @@ public:
 
   struct Vector2 centerPoint;
 
+  bool hasColliderPoints = false;
+
 };
 
 
