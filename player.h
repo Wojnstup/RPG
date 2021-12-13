@@ -1,4 +1,6 @@
-#include "raylib.h"
+#ifndef _TEXTBOX_H
+#include "textbox.h"
+#endif
 
 #ifndef _GAMEOBJECT_H
 #include "Engine/gameObject.h"
@@ -11,10 +13,8 @@ enum Orientation {
   LEFT
 };
 
-
 class Player : public GameObject{
  public:
-  
   Player(
 		 std::vector<GameObject*> * _objects,
 		 std::vector<std::vector<Vector2>> * _colliders,
@@ -24,7 +24,7 @@ class Player : public GameObject{
   void Update();
 
   /*Functions*/
-  void DrawSprite(int x, int y, int orientation, bool isMoving);
+  void DrawSprite(int x, int y, int orientation);
   void Move(); 
   void CollisionCheck();
   void SetInterPoint();
@@ -33,15 +33,17 @@ class Player : public GameObject{
   struct Vector2 size;
   struct Vector2 position;
   struct Rectangle collider;
-
-  // struct Vector2 centerPoint;
   struct Vector2 interPoint;
 
 private:
   std::vector<GameObject*> * objects;
+
+  TextBox * textBox;
   Texture2D sprite; 
   int speed=5;
   struct Vector2 speedV; 
+
+  bool isMoving = false;
   
   /* Animation variables */
   int prevOrient=FRONT;
@@ -49,7 +51,7 @@ private:
   float timer=0;
   const int maxFrame=4;
   
-  //Collider stuff
+  /*Collider stuff*/
   std::vector<std::vector<Vector2>> * colliders;
   
 };

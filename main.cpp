@@ -31,11 +31,16 @@ int main()
 	colliders.push_back(treeLine);
 	colliders.push_back(polygon);
 	
-	Chest chest1(&objects1,300,300);
+	/*Camera init*/
+	Camera2D camera = {0};
+
+	
+	TextBox textBox(&objects1);
+	Chest chest1(&objects1,300,300, &textBox);
 	colliders.push_back(chest1.points);
 
 	Player player(&objects1, &colliders, 10, 500);
-	Camera2D camera = {0};
+	
 	camera.target = player.position;
 	camera.offset = Vector2{screenWidth/2,screenHeight/2};
 	camera.rotation = 0.0f;

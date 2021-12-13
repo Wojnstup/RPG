@@ -1,9 +1,10 @@
 #include "chest.h"
 
-Chest::Chest(std::vector<GameObject*> * objects, int x, int y)
+Chest::Chest(std::vector<GameObject*> * objects, int x, int y, TextBox * _textBox)
 {
+  
   objects->push_back(this);
-  //hasColliderPoints = true;
+  textBox = _textBox;
   sprite = LoadTexture("Sprites/chest.png");
   destination = Rectangle{x,y,120,120};
 
@@ -33,18 +34,19 @@ void Chest::Update()
 					2.0f,
 					WHITE
   );
-
-  /*
-  for (int i=0; i< 4 ; i++)
-	DrawCircle(points[i].x, points[i].y,10.0f,WHITE);
-  */
 }
 
 void Chest::OnInteract()
 {
   if(isOpen)
-	isOpen=false;
+	{
+	  isOpen=false;
+	}
   else
-	isOpen = true; 
+	{
+	  isOpen = true; 
+
+	  textBox->Display("You've opened a chest! ", WHITE);
+	}
 }
 

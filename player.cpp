@@ -1,7 +1,5 @@
 #include "player.h"
-//#include "Engine/interactable.h"
 #include "chest.h"
-#include <iostream>
 
 #ifndef _COLLISIONS_H
 #include "Engine/collisions.h"
@@ -16,6 +14,7 @@ Player::Player(
 {
   _objects->push_back(this);
   objects = _objects;
+  textBox = dynamic_cast<TextBox*>((*objects)[0]);
   colliders = _colliders;
   sprite = LoadTexture("./Sprites/GRID.png");
   position = Vector2{x,y};
@@ -28,29 +27,32 @@ Player::Player(
 
 void Player::Update()
 {
-  Move();
-  if (IsKeyPressed(KEY_SPACE))
+  isMoving = false;
+  if (!textBox->isDisplaying)
 	{
-	  Interact();
+	  Move();
+	  if (IsKeyPressed(KEY_SPACE))
+		{
+		  Interact();
+		}
 	}
+
+  DrawSprite(position.x, position.y, prevOrient);
 }
 
 void Player::Move()
 {
   int newX = collider.x;
   int newY = collider.y;
-  bool isMoving = false;
   
   if (IsKeyDown(KEY_A))
   {
-	//newX -= speed;
 	speedV.x = 0-speed;
 	
 	prevOrient = LEFT;
 	isMoving = true;
   }else if (IsKeyDown(KEY_D))
   {
-	//newX += speed;
 	speedV.x = speed;
 	
 	prevOrient = RIGHT;
@@ -62,14 +64,12 @@ void Player::Move()
 
   if (IsKeyDown(KEY_W))
   {
-	//newY -= speed;
 	speedV.y = -speed;
 	  
 	prevOrient = BACK;
 	isMoving = true;
   }else  if (IsKeyDown(KEY_S))
   {
-	//newY += speed;
 	speedV.y = speed;
 	
 	prevOrient = FRONT;
@@ -90,7 +90,6 @@ void Player::Move()
 	}
   
   
-  DrawSprite(position.x, position.y, prevOrient, isMoving);
 }
 
 void Player::CollisionCheck()
@@ -107,7 +106,7 @@ void Player::CollisionCheck()
 
 }
 
-void Player::DrawSprite(int x, int y, int orientation, bool isMoving)
+void Player::DrawSprite(int x, int y, int orientation)
 {
   /* This increases frame every 0.2 seconds */
   if (isMoving)
@@ -170,7 +169,6 @@ void Player::Interact()
 	{
 	  if(object->hasColliderPoints)
 		{
-		  std::cout << "HAS COLLIDER POINTS!!!"; 
 		  if(CheckCollisionPolyLine(
 									centerPoint,
 									interPoint,

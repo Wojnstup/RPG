@@ -42,10 +42,12 @@ void Level::Loop()
 						  );
 	  
 		 for(int i=0; i<objects->size(); i++)
-		(*objects)[i]->Update();	  
+		   (*objects)[i]->Update();	  
 
 
 	  EndMode2D();
+	  for(int i=0; i<objects->size(); i++)
+		(*objects)[i]->UIpdate();	  
 	  EndDrawing();
 	}
 }
